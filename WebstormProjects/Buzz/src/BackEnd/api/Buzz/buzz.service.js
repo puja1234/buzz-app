@@ -52,7 +52,12 @@ exports.updateLikes = (buzzID,userEmail,category,res) => { //update likes for th
                            })
                        }
 
-                       if(doc.likes.indexOf(userEmail)){
+                       if(doc.likes.indexOf(userEmail)>=0){
+                           Post.find({_id: buzzID}, (err, data) => {
+                               res.send(data)
+                           })
+
+                       }else{
                            Post.update({_id: buzzID}, {$push: {likes: userEmail}}, (err, data) => {
                                if (err)
                                    res.send(err)
@@ -60,10 +65,6 @@ exports.updateLikes = (buzzID,userEmail,category,res) => { //update likes for th
                                    Post.find({_id: buzzID}, (err, data) => {
                                        res.send(data)
                                    })
-                           })
-                       }else{
-                           Post.find({_id: buzzID}, (err, data) => {
-                               res.send(data)
                            })
 
                        }
@@ -88,7 +89,12 @@ exports.updateLikes = (buzzID,userEmail,category,res) => { //update likes for th
                             })
                         }
 
-                        if(doc.dislike.indexOf(userEmail)){
+                        if(doc.dislike.indexOf(userEmail)>=0){
+                            Post.find({_id: buzzID}, (err, data) => {
+                                res.send(data)
+                            })
+
+                        }else{
                             Post.update({_id: buzzID}, {$push: {dislike: userEmail}}, (err, data) => {
                                 if (err)
                                     res.send(err)
@@ -96,10 +102,6 @@ exports.updateLikes = (buzzID,userEmail,category,res) => { //update likes for th
                                     Post.find({_id: buzzID}, (err, data) => {
                                         res.send(data)
                                     })
-                            })
-                        }else{
-                            Post.find({_id: buzzID}, (err, data) => {
-                                res.send(data)
                             })
 
                         }

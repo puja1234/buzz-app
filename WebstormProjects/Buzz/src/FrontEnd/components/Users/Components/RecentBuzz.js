@@ -13,20 +13,24 @@ export default class RecentBuzz extends Component{
      this.props.ReduxProps.dispatch(asyncActionGetBuzz());
 
     }
-    
-    // incrementLikes = (email,postID) =>{
-    //     let userLikePost = {
-    //         user_email:email,
-    //         postID:postID
-    //     }
-    //     this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
-    // }
+
+    likeDislike = (email,postID,category) =>{
+        let userLikePost = {
+            user_email:email,
+            postID:postID,
+            choice:category
+        }
+        console.log("inside likeDislike on button click",userLikePost);
+        this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
+    }
     // incrementDislikes = () =>{
     //     this.props.ReduxProps.dispatch(asyncDislikes());
     // }
 
     render(){
         let index = 0;
+        let startIndex = 0;
+
         const recent_buzz = this.props.ReduxProps.postFetch.buzz;
 
        console.log("content in buzz....................",recent_buzz);
@@ -50,8 +54,10 @@ export default class RecentBuzz extends Component{
                                     {items.content}
                                 </p>
                                 <div className="recentBuzz-footer">
-                                    <div className="like-dislike" ><img src={like}/></div>
-                                    <div className="like-dislike" ><img src={dislike}/></div>
+                                    <span className="likecount">{items.likes.length}</span>
+                                    <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'like')}><img src={like}/></button>
+                                    <span className="dislikecount">{items.dislike.length}</span>
+                                    <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'dislike')}><img src={dislike}/></button>
                                     <textarea placeholder="comment" className="comment"></textarea>
                                 </div>
                             </div>

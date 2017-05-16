@@ -24,7 +24,7 @@ exports.googleConst = () => {
                                 if(err) {
                                     return done(null);
                                 }else{
-                                    return done(null,user);
+                                    return done(null,newUser);
                                 }
                             });
                         }

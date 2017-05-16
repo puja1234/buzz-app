@@ -65,3 +65,10 @@
 .user_email {
 
 }
+
+.likecount{
+    float: right;
+}
+.dislikecount {
+    float: right;
+}

@@ -1,15 +1,11 @@
-'use strict'
+'use strict';
 
-//const data=require('./config/dataSource');
-const bodyParser = require('body-parser');
 const express = require('express');
 const webpack = require('webpack');
-const multer = require('multer')
+const multer = require('multer');
 const webconfig = require('../../webpack.config');
 const webpackMiddleware = require('webpack-dev-middleware');
-let expressJWT = require('express-jwt');
-let JWT = require('jsonwebtoken');
-let route = require('./routers/route');
+const route = require('./routers/route');
 
 const app = express();
 app.use('/files',express.static('files'));

@@ -34,3 +34,101 @@ exports.getSpecificPosts = (email,res) => {   //get all posts
         }
     })
 }
+
+exports.updateLikes = (buzzID,userEmail,category,res) => { //update likes for the post
+       var post = Post.find({}).cursor();
+            if(category==='like'){
+               post.on('data', function (doc) {
+                   if(doc._id == buzzID) {
+                       var check = doc.dislike.filter((item) => {
+                           return item == userEmail
+                       })
+                       if (check != null) {
+                           Post.update({_id: buzzID}, {$pull: {dislike: userEmail}},{safe:true},(err,data)=>{
+                               if(err)
+                                   console.log(err)
+                               else
+                                   console.log("data after pull",data)
+                           })
+                       }
+
+                       if(doc.likes.indexOf(userEmail)){
+                           Post.update({_id: buzzID}, {$push: {likes: userEmail}}, (err, data) => {
+                               if (err)
+                                   res.send(err)
+                               else
+                                   Post.find({_id: buzzID}, (err, data) => {
+                                       res.send(data)
+                                   })
+                           })
+                       }else{
+                           Post.find({_id: buzzID}, (err, data) => {
+                               res.send(data)
+                           })
+
+                       }
+
+                   }
+               })
+
+            } else {
+                console.log("inside dislike")
+                post.on('data', function (doc) {
+                    if(doc._id == buzzID) {
+                        var check = doc.likes.filter((item) => {
+                            return item == userEmail
+                        })
+                        if (check != null) {
+                            console.log("there is data in like that is same")
+                            Post.update({_id: buzzID}, {$pull: {likes: userEmail}},{safe:true},(err,data)=>{
+                                if(err)
+                                    console.log(err)
+                                else
+                                    console.log("data after pull",data)
+                            })
+                        }
+
+                        if(doc.dislike.indexOf(userEmail)){
+                            Post.update({_id: buzzID}, {$push: {dislike: userEmail}}, (err, data) => {
+                                if (err)
+                                    res.send(err)
+                                else
+                                    Post.find({_id: buzzID}, (err, data) => {
+                                        res.send(data)
+                                    })
+                            })
+                        }else{
+                            Post.find({_id: buzzID}, (err, data) => {
+                                res.send(data)
+                            })
+
+                        }
+
+                    }
+                })
+
+            }
+
+
+
+}
+
+    // }else{
+    //     var post = Post.find({}).cursor();
+    //     post.on('data',function (doc) {
+    //         var check = doc.likes.filter((item) => {
+    //             return item.user_email == userEmail
+    //         })
+    //         if (check != null) {
+    //             Post.update( {_id: buzzID}, { $pull: {likes: [userEmail] } })
+    //         }
+    //         Post.update({_id:buzzID},{$push: {dislike:[userEmail]}},(err,data)=>{
+    //             if(err)
+    //                 res.send(err)
+    //             else
+    //                 res.send(data)
+    //         })
+    //     })
+    // }
+    // }
+

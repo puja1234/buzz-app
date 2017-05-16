@@ -65,14 +65,3 @@ export  function likePostFailed(err) {
     return { type:LIKE_POST_FAILED,err }
 }
 
-export  function dislikePostStarted() {
-    return { type:DISLIKE_POST_STARTED }
-}
-
-export  function dislikePostSuccess(dislikes) {
-    return { type:DISLIKE_POST_SUCCESS,dislikes }
-}
-
-export  function dislikePostFailed(err) {
-    return { type:DISLIKE_POST_FAILED,err }
-}

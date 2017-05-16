@@ -44,7 +44,6 @@ export default class Buzz extends Component{
                 actionType: this.state.actionType,
                 posted_by: email,
                 posted_by_image: image,
-
             }
             let formData = new FormData();
             var data = JSON.stringify(newData)
@@ -63,10 +62,34 @@ export default class Buzz extends Component{
    }
 
     imageUpload = (event) => {
+       var fileName = event.target.files[0].name;
+       var extension = fileName.split('.').pop();
+       console.log(extension,'++++++++++++++++++++++')
+        if(extension == 'png' || extension=='jpg' || extension == 'jpeg' || extension == 'gif') {
+            this.setState({
+                image: event.target.files[0]
+            });
+        }
+        else {
+           alert("Please upload image only")
+            this.setState({
+                image: ''
+            });
+        }
+       //  var file = this.refs.file.files[0];
+       //  var reader = new FileReader();
+       //  var url = reader.readAsDataURL(file);
+       //
+       //  reader.onloadend = function (e) {
+       //      this.setState({
+       //          image: event.target.files[0]
+       //  },function () {
+       //          console.log(this.state.image,'***************************')
+       //      })
+       //  }.bind(this);
+       //  console.log(url);
+       //  console.log(this.state.image,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
-       this.setState({image:event.target.files[0]},()=>{
-           console.log("image",this.state.image)
-       })
     }
 
     render(){
@@ -76,8 +99,9 @@ export default class Buzz extends Component{
                  <div className="wrapper">
                      <div className="header"> <img src={edit}  /> Create Buzz</div>
                      <textarea rows="10" cols="100"
-                               placeholder="create a buzz"
+                               placeholder="create a buzz (Max 500 characters)"
                                className="buzz-details"
+                               maxLength="500"
                                onChange={this.onBuzzChange.bind(this)}
                                value={this.state.buzz} ></textarea>
 
@@ -97,12 +121,15 @@ export default class Buzz extends Component{
 
 
                          <form encType="multipart/form-data">
-                             <input type="file" name="file" onBlur={this.imageUpload} />
+                             <input ref="file" type="file" name="file" onChange={this.imageUpload} />
                          </form>
 
 
                          <button className="submit-buzz" onClick={this.addBuzz.bind(this)}>Submit</button>
                      </div>
+                 </div>
+                 <div className="imagePreview">
+                    <img src={this.state.image}/>
                  </div>
                  <div className="errorBuzz">
                  {this.state.err}

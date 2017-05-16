@@ -24,28 +24,17 @@ module.exports = (app) => {
 
     app.get("/api/login",passport.authenticate('google',{scope:["profile","email"]}));
     app.get("/api/logout",function (req,res) {
-        req.logout();
-        res.redirect('/');
+        req.session.destroy(function() {
+            req.logout();
+            //req.logOut();
+            /*res.clearCookie('userId');
+            res.clearCookie('token');*/
+            res.redirect('/');
+        });
     })
-
-    // const logger = (req,res,next) => {
-    //     console.log(req.url,"req url")
-    //     if(req.url!='http://localhost:3000/'){
-    //         if(req.user==null){
-    //             res.redirect('/')
-    //         }else{
-    //             next();
-    //         }
-    //     }
-    // }
-    //
-    // app.use(logger);
-
-
-
     app.get("/auth/google/callback",passport.authenticate('google',{
         successRedirect:"http://localhost:3000/home",
-        failureRedirect:"http://localhost:3000/profile"
+        failureRedirect:"http://localhost:3000/"
     }));
 
 
@@ -57,8 +46,21 @@ module.exports = (app) => {
 
 
     app.get('/Buzz',buzz_controller.getPost);
+    app.put('/api/likeDislike',buzz_controller.updateLikes);
 
-    app.get('/*', function (req, res) {
+    loggedIn = (req, res, next) => {
+        if (req.url == "/") {
+            if (req.user) {
+                res.redirect("/home")
+            }
+            next();
+        } else if (req.user) {
+            next()
+        } else {
+            res.redirect("/")
+        }
+    }
+    app.get('/*',loggedIn, function (req, res) {
         res.sendfile('./src/index.html')
     })
 }

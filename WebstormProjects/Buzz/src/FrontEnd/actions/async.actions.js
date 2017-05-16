@@ -97,15 +97,20 @@ export const asyncActionGetSpecificBuzz = (email) => {
 }
 
 export const asyncLikes = (userLikePost) => {
-   return (dispatch) => {
+    return (dispatch) => {
        dispatch(likePostStarted());
-       fetch('http://localhost:3000/api/likePost',{
+       fetch('http://localhost:3000/api/likeDislike',{
+           credentials: 'include',
            method: 'put',
-           body:userLikePost
+           headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json',
+           },
+           body:JSON.stringify({userLikePost}) ,
        })
            .then(response => response.json())
-           .then(() => {
-               dispatch(likePostSuccess())
+           .then((data) => {
+               dispatch(likePostSuccess(data))
            })
            .catch(err => {
                dispatch(likePostFailed(err));

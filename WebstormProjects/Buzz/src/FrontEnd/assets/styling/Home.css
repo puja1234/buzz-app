@@ -223,3 +223,8 @@ p {
     font-size: x-large;
     color: red;
 }
+
+.imagePreview {
+    width: 324px;
+    padding-left: 301px;
+}

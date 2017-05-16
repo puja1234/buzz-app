@@ -28,9 +28,10 @@ var BuzzSchema = new mongoose.Schema({
     },
     imageUpload:{
         type:String
-    }
-
-},
+    },
+    likes:[],
+    dislike:[]
+    },
     { versionKey:false,
 
 }

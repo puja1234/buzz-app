@@ -36,3 +36,11 @@ exports.createPost =(req,res,next) => { //create new post in db
 
 //delete post from db
 
+exports.updateLikes = (req,res,next) => {  //update post specicif like
+    let likeData = req.body.userLikePost;
+    let buzzId = likeData.postID;
+    let userEmail = likeData.user_email;
+    let category = likeData.choice;
+    PostService.updateLikes(buzzId,userEmail,category,res);
+}
+

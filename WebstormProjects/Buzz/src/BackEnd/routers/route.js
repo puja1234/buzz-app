@@ -9,6 +9,7 @@ const GoogleStratergy = require('./../Authentication/googleAuth');
 let upload = multer({dest:'files/'});
 let buzz_controller = require('./../api/Buzz/buzz.controller.js');
 let user_controller = require('./../api/Users/user.controller.js');
+let comment_controller = require('./../api/Comments/comments.controller');
 
 module.exports = (app) => {
 
@@ -44,6 +45,8 @@ module.exports = (app) => {
 
     app.get('/Buzz',buzz_controller.getPost);
     app.put('/api/likeDislike',buzz_controller.updateLikes);
+    app.put('/api/comment',comment_controller.create);
+    app.get('/api/getComments',comment_controller.getComments)
 
     loggedIn = (req, res, next) => {
         if (req.url == "/") {

@@ -11,9 +11,12 @@ import {
     LIKE_POST_STARTED,
     LIKE_POST_SUCCESS,
     LIKE_POST_FAILED,
-    DISLIKE_POST_STARTED,
-    DISLIKE_POST_SUCCESS,
-    DISLIKE_POST_FAILED
+    COMMENT_POST_STARTED,
+    COMMENT_POST_SUCCESS,
+    COMMENT_POST_FAILED,
+    GET_COMMENT_STARTED,
+    GET_COMMENT_SUCCESS,
+    GET_COMMENT_FAILED
 } from './../config/config.constants'
 
 export function apiCallStarted() {
@@ -63,5 +66,29 @@ export  function likePostSuccess(likes) {
 
 export  function likePostFailed(err) {
     return { type:LIKE_POST_FAILED,err }
+}
+
+export function commentStarted() {
+    return { type:COMMENT_POST_STARTED }
+}
+
+export function commentSuccess() {
+    return { type:COMMENT_POST_SUCCESS }
+}
+
+export function commentFailed(err) {
+    return { type:COMMENT_POST_FAILED,err }
+}
+
+export function fetchCommentCallStarted() {
+    return { type:GET_COMMENT_STARTED }
+}
+
+export function fetchCommentCallSuccess(commenting) {
+    return { type:GET_COMMENT_SUCCESS,commenting }
+}
+
+export function fetchCommentCallFailed(err) {
+    return { type:GET_COMMENT_FAILED,err }
 }
 

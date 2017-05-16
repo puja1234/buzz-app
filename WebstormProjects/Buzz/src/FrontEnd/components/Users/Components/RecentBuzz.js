@@ -4,9 +4,8 @@ import get from 'lodash/get';
 import like from '../../../assets/images/like.png'
 import dislike from '../../../assets/images/dislike.png'
 import '../../../assets/styling/RecentBuzz.css'
-import { asyncActionGetBuzz,asyncLikes } from '../../../actions'
-
-
+import { asyncActionGetBuzz,asyncLikes,asyncGetComment } from '../../../actions'
+import Comment from './Comment'
 
 export default class RecentBuzz extends Component{
     constructor(props){
@@ -17,6 +16,7 @@ export default class RecentBuzz extends Component{
     }
     componentWillMount(){
      this.props.ReduxProps.dispatch(asyncActionGetBuzz());
+     this.props.ReduxProps.dispatch(asyncGetComment());
 
     }
 
@@ -30,30 +30,18 @@ export default class RecentBuzz extends Component{
         this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
     };
 
-    writeComment = (event) => {
-        this.setState({
-            comment:event.target.value
-        })
-    };
 
-    submitComment = (email,postId) => {
-        let comment = {
-            user_email:email,
-            postId:postId,
-            content:this.state.comment
-        }
-        console.log("comment to be submitted is :",comment);
-        this.props.dispatch(asyncComment(comment));
-    };
 
     render(){
         let index = 0;
         let startIndex = 0;
 
         const recent_buzz = this.props.ReduxProps.postFetch.buzz;
-
-       console.log("content in buzz....................",recent_buzz);
+      const commentsState = get(this.props.ReduxProps.commentReducer,'commentPost');
+       console.log("content in comments in recentBuzz....................",commentsState);
         const email = get(this.props.ReduxProps.userFetch, 'users.email');
+        const image = get(this.props.ReduxProps.userFetch, 'users.imageURL');
+
         return(
 
                 <div className="recentBuzz">
@@ -77,13 +65,15 @@ export default class RecentBuzz extends Component{
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'like')}><img src={like}/></button>
                                     <span className="dislikecount">{items.dislike.length}</span>
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'dislike')}><img src={dislike}/></button>
-                                    <textarea placeholder="comment"
-                                              className="comment"
-                                              maxLength="200"
-
-                                              value={this.state.comment} >
-                                    ></textarea>
-
+                                    {commentsState.map((comment_item)=>{
+                                        if(items._id === comment_item.postId){
+                                          return  <div key={index++}>
+                                                <img src={comment_item.user_Profile}/>
+                                                <span>{comment_item.userEmail}</span>
+                                                <div>{comment_item.content}</div>
+                                            </div>
+                                        }})}
+                                    <Comment ReduxState={this.props.ReduxProps} email={email} userImage={image} buzzID = {items._id}/>
                                 </div>
                             </div>
                         </div>

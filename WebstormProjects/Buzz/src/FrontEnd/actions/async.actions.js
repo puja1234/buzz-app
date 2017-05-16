@@ -11,9 +11,12 @@ import {
     likePostStarted,
     likePostSuccess,
     likePostFailed,
-    dislikePostStarted,
-    dislikePostSuccess,
-    dislikePostFailed
+    commentStarted,
+    commentSuccess,
+    commentFailed,
+    fetchCommentCallStarted,
+    fetchCommentCallSuccess,
+    fetchCommentCallFailed
 }from './app.actions'
 
 import fetch from 'isomorphic-fetch';
@@ -119,9 +122,46 @@ export const asyncLikes = (userLikePost) => {
    }
 }
 
-// export const asyncComment = () => {
-//     return (dispatch) => {
-//         dispatch(commentStarted());
-//     }
-// }
+export const asyncComment = (commentPost) => {
+    console.log(commentPost)
+    return (dispatch) => {
+        dispatch(commentStarted());
+        fetch('http://localhost:3000/api/comment',{
+            method:'put',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({commentPost}),
+        })
+            .then(response => response.json())
+            .then((data) => {
+            dispatch(commentSuccess(data))
+                dispatch(asyncGetComment())
+            })
+            .catch(err => {
+                dispatch(commentFailed(err));
+        })
+    }
+}
+
+export const asyncGetComment = () => {
+    return (dispatch) => { // this is store's dispatch method
+        dispatch(fetchCommentCallStarted()); // call started
+        fetch('http://localhost:3000/api/getComments', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(fetchCommentCallSuccess(data)); 	// success
+            })
+            .catch(err => {
+                dispatch(fetchCommentCallFailed(err));		// failure
+            });
+    }
+}
 

@@ -12,9 +12,6 @@ import {
     LIKE_POST_STARTED,
     LIKE_POST_SUCCESS,
     LIKE_POST_FAILED,
-    DISLIKE_POST_STARTED,
-    DISLIKE_POST_SUCCESS,
-    DISLIKE_POST_FAILED
 } from '../config/config.constants'
 
 const initialState ={

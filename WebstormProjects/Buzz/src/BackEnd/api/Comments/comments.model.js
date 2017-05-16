@@ -4,15 +4,18 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
-    user : {
-        userName: String,
-        userImage:String
+    created_at: {
+        type: Number,
+        default: Date.now
     },
-    cratedAt:String,
-    updatedAt:String,
+    updated_at: {
+        type: Number,
+        default: Date.now
+    },
     content : String,
-    time : String,
-    postId : String
+    postId : String,
+    userEmail:String,
+    user_Profile:String
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);

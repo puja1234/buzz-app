@@ -9,6 +9,12 @@ import { asyncActionGetBuzz,asyncLikes } from '../../../actions'
 
 
 export default class RecentBuzz extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            comment:''
+        }
+    }
     componentWillMount(){
      this.props.ReduxProps.dispatch(asyncActionGetBuzz());
 
@@ -22,10 +28,23 @@ export default class RecentBuzz extends Component{
         }
         console.log("inside likeDislike on button click",userLikePost);
         this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
-    }
-    // incrementDislikes = () =>{
-    //     this.props.ReduxProps.dispatch(asyncDislikes());
-    // }
+    };
+
+    writeComment = (event) => {
+        this.setState({
+            comment:event.target.value
+        })
+    };
+
+    submitComment = (email,postId) => {
+        let comment = {
+            user_email:email,
+            postId:postId,
+            content:this.state.comment
+        }
+        console.log("comment to be submitted is :",comment);
+        this.props.dispatch(asyncComment(comment));
+    };
 
     render(){
         let index = 0;
@@ -58,7 +77,13 @@ export default class RecentBuzz extends Component{
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'like')}><img src={like}/></button>
                                     <span className="dislikecount">{items.dislike.length}</span>
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'dislike')}><img src={dislike}/></button>
-                                    <textarea placeholder="comment" className="comment"></textarea>
+                                    <textarea placeholder="comment"
+                                              className="comment"
+                                              maxLength="200"
+
+                                              value={this.state.comment} >
+                                    ></textarea>
+
                                 </div>
                             </div>
                         </div>

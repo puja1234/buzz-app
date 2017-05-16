@@ -25,7 +25,7 @@ export const asyncActionFetchUserDetail = () => {
             credentials : 'include'
         }).then(response => response.json())
             .then(data => {
-                console.log(data, "data")
+                console.log(data, "data");
                 dispatch(apiCallSuccess(data));
             })
             .catch(err => {
@@ -110,6 +110,7 @@ export const asyncLikes = (userLikePost) => {
        })
            .then(response => response.json())
            .then((data) => {
+               console.log('>>>>>>>>>>>>>>>>>step 1................n');
                dispatch(likePostSuccess(data))
            })
            .catch(err => {
@@ -117,4 +118,10 @@ export const asyncLikes = (userLikePost) => {
            })
    }
 }
+
+// export const asyncComment = () => {
+//     return (dispatch) => {
+//         dispatch(commentStarted());
+//     }
+// }
 

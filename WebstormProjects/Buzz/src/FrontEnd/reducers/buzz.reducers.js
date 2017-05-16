@@ -1,3 +1,4 @@
+import find from 'lodash/find';
 import {
     POST_BUZZ_STARTED,
     POST_BUZZ_SUCCESS,
@@ -74,7 +75,7 @@ export const postFetch = (state=initialState,action) => {
         }
 
         case FETCH_POST_FAILED:{
-            console.log("buzz error in reducer")
+            console.log("buzz error in reducer");
             return {
                 ...state,
                 loading : false,
@@ -84,41 +85,26 @@ export const postFetch = (state=initialState,action) => {
         }
 
         case LIKE_POST_STARTED: {
-            console.log(state.buzz,'+++++++++++')
-            console.log("like post in reducer started")
+            console.log(state.buzz,'+++++++++++');
+            console.log("like post in reducer started");
             return {
                 ...state,
             }
         }
 
         case LIKE_POST_SUCCESS : {
-            let i=0;
-            console.log("like post in reducer success")
-           for(i=0;i<state.buzz.length-1;i++){
-               if(state.buzz[i]._id === action.likes._id){
-                   if(action.likes.category==='like'){
-                       let j=0;
-                       for(j=0;j<state.buzz[i].likes.length-1;j++){
-                           state.buzz[i].likes[j]=action.likes.likes[j];
-                       }
-                   }else{
-                       let j=0;
-                       for(j=0;j<state.buzz[i].dislike.length-1;j++){
-                           state.buzz[i].dislike[j]=action.likes.dislike[j];
-                       }
-                   }
-
-                }
-           }
-           console.log(state.buzz,'???????????????????')
+            let newBuzz = state.buzz;
+            let removePost= find(newBuzz, function(post) { return post._id == action.likes[0]._id; });
+             let indexOf_removePost = newBuzz.indexOf(removePost);
+             newBuzz.splice(indexOf_removePost,1,action.likes[0]);
              return{
                 ...state,
-                buzz:state.buzz
+                buzz:newBuzz
             }
         }
 
         case LIKE_POST_FAILED: {
-            console.log("like post in reducer")
+            console.log("like post in reducer");
             return {
                 ...state,
                 err: action.err,

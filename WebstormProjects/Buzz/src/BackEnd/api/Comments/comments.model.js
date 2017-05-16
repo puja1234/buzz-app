@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 
 var CommentSchema = new Schema({
     user : {
-        userId : String,
+        userName: String,
+        userImage:String
     },
     cratedAt:String,
     updatedAt:String,

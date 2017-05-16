@@ -26,9 +26,6 @@ module.exports = (app) => {
     app.get("/api/logout",function (req,res) {
         req.session.destroy(function() {
             req.logout();
-            //req.logOut();
-            /*res.clearCookie('userId');
-            res.clearCookie('token');*/
             res.redirect('/');
         });
     })

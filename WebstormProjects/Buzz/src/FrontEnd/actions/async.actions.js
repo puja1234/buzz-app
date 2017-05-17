@@ -16,7 +16,13 @@ import {
     commentFailed,
     fetchCommentCallStarted,
     fetchCommentCallSuccess,
-    fetchCommentCallFailed
+    fetchCommentCallFailed,
+    deletePostStarted,
+    deletePostSuccess,
+    deletePostFailed,
+    deleteCommentStarted,
+    deleteCommentSuccess,
+    deleteCommentFailed
 }from './app.actions'
 
 import fetch from 'isomorphic-fetch';
@@ -136,7 +142,7 @@ export const asyncComment = (commentPost) => {
         })
             .then(response => response.json())
             .then((data) => {
-            dispatch(commentSuccess(data))
+            dispatch(commentSuccess(data));
                 dispatch(asyncGetComment())
             })
             .catch(err => {
@@ -163,5 +169,52 @@ export const asyncGetComment = () => {
                 dispatch(fetchCommentCallFailed(err));		// failure
             });
     }
+};
+
+
+export const asyncDeletePost = (postId) => {
+    console.log("inside async action of delete",postId);
+    return (dispatch) => {
+        dispatch(deletePostStarted());
+        fetch('http://localhost:3000/api/deletePost',{
+            credentials: 'include',
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({postId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(deletePostSuccess(data));
+               dispatch(deleteComment(postId))
+            })
+            .catch(err => {
+                dispatch(deletePostFailed(err))
+            })
+    }
 }
 
+export const deleteComment = (postId) => {
+    return (dispatch) => {
+        dispatch(deleteCommentStarted());
+        fetch('http://localhost:3000/api/deleteComment',{
+            credentials: 'include',
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({postId})
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(deleteCommentSuccess(data));
+
+            })
+            .catch(err => {
+                dispatch(deleteCommentFailed(err))
+            })
+    }
+}

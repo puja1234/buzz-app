@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import like from '../../../assets/images/like.png'
 import dislike from '../../../assets/images/dislike.png'
 import '../../../assets/styling/RecentBuzz.css'
-import { asyncActionGetBuzz,asyncLikes,asyncGetComment } from '../../../actions'
+import { asyncActionGetBuzz,asyncLikes,asyncGetComment,asyncDeletePost } from '../../../actions'
 import Comment from './Comment'
 
 export default class RecentBuzz extends Component{
@@ -30,6 +30,11 @@ export default class RecentBuzz extends Component{
         this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
     };
 
+    deletePost = (postId) => {
+        this.props.ReduxProps.dispatch(asyncDeletePost(postId));
+        this.props.ReduxProps.dispatch(asyncActionGetBuzz());
+    }
+
 
 
     render(){
@@ -51,7 +56,15 @@ export default class RecentBuzz extends Component{
                           <div className="posts">
                                 <img className="user_imageurl" src={items.user_imageURL}/>
                                 <span className="user_email">{items.user_email}</span>
+
                                 <div className="category">{items.category}</div>
+                              { email === items.user_email ?
+                                  <div>
+                                      <button className="delete" onClick={()=> this.deletePost(items._id)}>Delete</button>
+                                      <button className="edit">Edit</button>
+                                  </div> :
+                                  <div></div>
+                              }
                               {items.imageUpload ?
                                   <img src={"http://localhost:3000/files/"+items.imageUpload} className="posted-image"/>:
                                   <div></div>
@@ -65,14 +78,22 @@ export default class RecentBuzz extends Component{
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'like')}><img src={like}/></button>
                                     <span className="dislikecount">{items.dislike.length}</span>
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'dislike')}><img src={dislike}/></button>
-                                    {commentsState.map((comment_item)=>{
-                                        if(items._id === comment_item.postId){
-                                          return  <div key={index++}>
-                                                <img src={comment_item.user_Profile}/>
-                                                <span>{comment_item.userEmail}</span>
-                                                <div>{comment_item.content}</div>
-                                            </div>
-                                        }})}
+                                    <div >
+                                        {commentsState ?
+                                            <div>
+                                                {commentsState.map((comment_item) => {
+                                                    if (items._id === comment_item.postId) {
+                                                        return <div key={index++} className="comments">
+                                                            <img src={comment_item.user_Profile}/>
+                                                            <span>{comment_item.userEmail}</span>
+                                                            <div>{comment_item.content}</div>
+                                                        </div>
+                                                    }
+                                                })}
+                                            </div> :
+                                            <div></div>
+                                        }
+                                    </div>
                                     <Comment ReduxState={this.props.ReduxProps} email={email} userImage={image} buzzID = {items._id}/>
                                 </div>
                             </div>

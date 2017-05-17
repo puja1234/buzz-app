@@ -46,7 +46,9 @@ module.exports = (app) => {
     app.get('/Buzz',buzz_controller.getPost);
     app.put('/api/likeDislike',buzz_controller.updateLikes);
     app.put('/api/comment',comment_controller.create);
-    app.get('/api/getComments',comment_controller.getComments)
+    app.get('/api/getComments',comment_controller.getComments);
+    app.delete('/api/deletePost',buzz_controller.deletePost);
+    app.delete('/api/deleteComment',comment_controller.deleteComment);
 
     loggedIn = (req, res, next) => {
         if (req.url == "/") {

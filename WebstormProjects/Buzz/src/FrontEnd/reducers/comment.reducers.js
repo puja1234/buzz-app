@@ -4,7 +4,10 @@ import {
     COMMENT_POST_FAILED,
     GET_COMMENT_STARTED,
     GET_COMMENT_SUCCESS,
-    GET_COMMENT_FAILED
+    GET_COMMENT_FAILED,
+    DELETE_COMMENT_STARTED,
+    DELETE_COMMENT_SUCCESS,
+    DELETE_COMMENT_FAILED
 }from './../config/config.constants'
 
 let initialState = {
@@ -48,6 +51,23 @@ export const commentReducer = (state=initialState,action) => {
         }
         case GET_COMMENT_FAILED:{
             return {
+                ...state,
+                err:action.err
+            }
+        }
+        case DELETE_COMMENT_STARTED:{
+            return{
+                ...state
+            }
+        }
+        case DELETE_COMMENT_SUCCESS:{
+            return{
+                ...state,
+
+            }
+        }
+        case DELETE_COMMENT_FAILED:{
+            return{
                 ...state,
                 err:action.err
             }

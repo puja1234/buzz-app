@@ -5,5 +5,6 @@ export {
     asyncLikes,
     asyncActionGetSpecificBuzz,
     asyncComment,
-    asyncGetComment
+    asyncGetComment,
+    asyncDeletePost
 } from './async.actions'

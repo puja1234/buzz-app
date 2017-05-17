@@ -108,29 +108,25 @@ exports.updateLikes = (buzzID,userEmail,category,res) => { //update likes for th
 
                     }
                 })
-
             }
-
-
-
 }
 
-    // }else{
-    //     var post = Post.find({}).cursor();
-    //     post.on('data',function (doc) {
-    //         var check = doc.likes.filter((item) => {
-    //             return item.user_email == userEmail
-    //         })
-    //         if (check != null) {
-    //             Post.update( {_id: buzzID}, { $pull: {likes: [userEmail] } })
-    //         }
-    //         Post.update({_id:buzzID},{$push: {dislike:[userEmail]}},(err,data)=>{
-    //             if(err)
-    //                 res.send(err)
-    //             else
-    //                 res.send(data)
-    //         })
-    //     })
-    // }
-    // }
+exports.deletePost = (id,res) => {
+    console.log("deleting post ")
+    Post.remove({ _id: id}, (err,data)=> {
+        if (err) {
+           res.send(err);
+        }
+        else {
+            Post.find({},(err,data)=>{
+                if(err)
+                    res.send(err);
+                else
+                    res.send(data)
+            })
+
+        }
+    });
+}
+
 

@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import get from 'lodash/get';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import BuzzHeader from '../../../assets/images/BuzzHeader.jpg'
 import logo from'../../../assets/images/to_the_new.jpg'
@@ -9,6 +10,7 @@ import Complaints from '../Components/Complaints'
 import Buzz from '../Components/Buzz'
 import RecentBuzz from '../Components/RecentBuzz'
 import {asyncActionFetchUserDetail} from '../../../actions'
+import About from '../Components/About'
 
 class Home extends Component{
 
@@ -70,7 +72,7 @@ class Home extends Component{
                         <p>@ 2017, To The New</p>
 
                         <ul className="help-menu">
-                            <li> <a href="#"> About </a> </li>
+                            <li> <a href="/about"> About </a> </li>
                             <li> <a href="#"> Help </a> </li>
                         </ul>
                     </div>
@@ -87,9 +89,12 @@ class Home extends Component{
                      :
                     <Complaints />
                 }
-                {/*<Router>*/}
-                    {/*<Route path='/showPosts' component={Posts}/>*/}
-                {/*</Router>*/}
+                <Router>
+                    <div>
+                        <Route exact path='/about' component={About}/>
+
+                    </div>
+                </Router>
 
 
                 <footer className="end"> <p> END OF CONTENT </p> </footer>

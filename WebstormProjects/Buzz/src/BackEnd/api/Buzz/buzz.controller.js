@@ -35,6 +35,12 @@ exports.createPost =(req,res,next) => { //create new post in db
 //update post in db
 
 //delete post from db
+exports.deletePost = (req,res,next) => {
+    console.log("inside delete post with id",req.body);
+    let id = req.body.postId;
+    // console.log("inside delete post with id",id)
+    PostService.deletePost(id,res);
+}
 
 exports.updateLikes = (req,res,next) => {  //update post specicif like
     let likeData = req.body.userLikePost;

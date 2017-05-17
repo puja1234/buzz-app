@@ -12,6 +12,9 @@ import {
     LIKE_POST_STARTED,
     LIKE_POST_SUCCESS,
     LIKE_POST_FAILED,
+    DELETE_POST_STARTED,
+    DELETE_POST_SUCCESS,
+    DELETE_POST_FAILED
 } from '../config/config.constants'
 
 const initialState ={
@@ -63,11 +66,11 @@ export const postFetch = (state=initialState,action) => {
 
         case FETCH_POST_SUCCESS:{
             console.log("buzz started in reducer")
-            const newPosts = state.buzz.concat(action.postBuzz)
+
             return{
                 ...state,
                 loading:false,
-                buzz:newPosts,
+                buzz:action.postBuzz,
             }
         }
 
@@ -105,6 +108,22 @@ export const postFetch = (state=initialState,action) => {
             return {
                 ...state,
                 err: action.err,
+            }
+        }
+        case DELETE_POST_STARTED:{
+            return {
+                ...state
+            }
+        }
+        case DELETE_POST_SUCCESS:{
+            return{
+                ...state,
+            }
+        }
+        case DELETE_POST_FAILED : {
+            return {
+                ...state,
+                err:action.err
             }
         }
     }

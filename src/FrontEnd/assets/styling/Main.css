@@ -1,0 +1,39 @@
+.container {
+    position: relative;
+}
+.containerImage {
+    filter: blur(5px);
+    width: 100vw;
+    height: 100vh;
+}
+
+.middle {
+    background: #fff;
+    position: absolute;
+    margin: -100px 0 0 -135px;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    padding: 20px 85px;
+}
+
+.logoImage{
+    width: 100px;
+    height: 100px;
+}
+
+.middle h4 {
+    color:grey;
+}
+.middle button {
+    font-weight: bold;
+    background: orangered;
+    border: none;
+}
+
+.middle button a {
+    display: block;
+    padding:10px;
+    color: white;
+    text-decoration: none;
+}

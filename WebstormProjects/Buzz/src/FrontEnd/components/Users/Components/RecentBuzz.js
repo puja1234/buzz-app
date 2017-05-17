@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import get from 'lodash/get';
+import find from 'lodash/find'
 
 import like from '../../../assets/images/like.png'
 import dislike from '../../../assets/images/dislike.png'
@@ -19,16 +20,52 @@ export default class RecentBuzz extends Component{
      this.props.ReduxProps.dispatch(asyncGetComment());
 
     }
-
-    likeDislike = (email,postID,category) =>{
+    likeDislike = (email,postID,category) => {
         let userLikePost = {
-            user_email:email,
-            postID:postID,
-            choice:category
-        }
-        console.log("inside likeDislike on button click",userLikePost);
+                user_email: email,
+                postID: postID,
+                choice: category
+            }
         this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
-    };
+
+        // console.log("category and email is :", category, email)
+        // let userLikePost = {
+        //     user_email: email,
+        //     postID: postID,
+        //     choice: category
+        // }
+        // let buzzArray = this.props.ReduxProps.postFetch.buzz;
+        // console.log("buzz array is ", buzzArray)
+        // let buzzMatches = find(buzzArray, function (post) {
+        //     return post._id == postID
+        // });//check if user has already liked
+        // if (category === 'like') {
+        //     console.log('inside like with object', buzzMatches)
+        //     find(buzzMatches.likes, function (post) {
+        //         console.log('index of like', buzzMatches.likes.indexOf(email));
+        //         if (buzzMatches.likes.indexOf(email) < 0) {
+        //             this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
+        //             return;
+        //         }
+        //         else
+        //             return;
+        //
+        //     });
+        // } else {
+        //     console.log("inside dislike with object", buzzMatches)
+        //     find(buzzMatches.dislike, function (post) { //check if user has already disliked
+        //         console.log('index of dislike', buzzMatches.dislike.indexOf(email))
+        //         if (buzzMatches.dislike.indexOf(email) < 0) {
+        //             this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
+        //             return;
+        //         }
+        //         else
+        //             return;
+        //
+        //     });
+        // }
+    }
+
 
     deletePost = (postId) => {
         this.props.ReduxProps.dispatch(asyncDeletePost(postId));
@@ -61,7 +98,6 @@ export default class RecentBuzz extends Component{
                               { email === items.user_email ?
                                   <div>
                                       <button className="delete" onClick={()=> this.deletePost(items._id)}>Delete</button>
-                                      <button className="edit">Edit</button>
                                   </div> :
                                   <div></div>
                               }

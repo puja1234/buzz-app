@@ -16,7 +16,8 @@ export default class Buzz extends Component{
             actionType:'Activity',
             posted_by:'',
             posted_by_image:'',
-            err:''
+            err:'',
+            imagePreviewUrl:''
         }
     }
 
@@ -53,13 +54,15 @@ export default class Buzz extends Component{
                 postData: newData,
                 err:'',
                 buzz: '',
-                image: ''
+                image: '',
+                imagePreviewUrl:''
             }, function () {
                 console.log(this.state.postData);
                 this.props.ReduxProps.dispatch(asyncActionPostBuzz(formData));
             });
         }
    }
+
 
     imageUpload = (event) => {
        var fileName = event.target.files[0].name;
@@ -69,28 +72,32 @@ export default class Buzz extends Component{
             this.setState({
                 image: event.target.files[0]
             });
+
+            let reader = new FileReader();
+            let file = event.target.files[0];
+
+            reader.onloadend = () => {
+                console.log('image in reader',reader.result)
+                this.setState({
+                    imagePreviewUrl: reader.result
+                }, function(){
+                    console.log("image selected is",this.state.image)
+                });
+            }
+
+            reader.readAsDataURL(file);
         }
+
         else {
            alert("Please upload image only")
             this.setState({
                 image: ''
             });
         }
-       //  var file = this.refs.file.files[0];
-       //  var reader = new FileReader();
-       //  var url = reader.readAsDataURL(file);
-       //
-       //  reader.onloadend = function (e) {
-       //      this.setState({
-       //          image: event.target.files[0]
-       //  },function () {
-       //          console.log(this.state.image,'***************************')
-       //      })
-       //  }.bind(this);
-       //  console.log(url);
-       //  console.log(this.state.image,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
-    }
+
+
+    };
 
     render(){
         return(
@@ -129,7 +136,7 @@ export default class Buzz extends Component{
                      </div>
                  </div>
                  <div className="imagePreview">
-                    <img src={this.state.image}/>
+                    <img src={this.state.imagePreviewUrl}/>
                  </div>
                  <div className="errorBuzz">
                  {this.state.err}

@@ -64,19 +64,9 @@ class Home extends Component{
 
                     <ul className="main-menu">
                         <li> <a onClick={this.showBuzzComponent.bind(this)}> Home <span>&#10095;</span></a> </li>
-                        <li> <a onClick={this.showComplaintComponent.bind(this)}> Complaints <span>&#10095;</span> </a> </li>
-                        <li> <a > Posts <span>&#10095;</span> </a> </li>
+                        {/*<li> <a onClick={this.showComplaintComponent.bind(this)}> Complaints <span>&#10095;</span> </a> </li>
+                        <li> <a > Posts <span>&#10095;</span> </a> </li>*/}
                     </ul>
-
-                    <div>
-                        <p>@ 2017, To The New</p>
-
-                        <ul className="help-menu">
-                            <li> <a href="/about"> About </a> </li>
-                            <li> <a href="#"> Help </a> </li>
-                        </ul>
-                    </div>
-
                 </div>
                 </div>
 
@@ -89,15 +79,15 @@ class Home extends Component{
                      :
                     <Complaints />
                 }
-                <Router>
-                    <div>
-                        <Route exact path='/about' component={About}/>
-
-                    </div>
-                </Router>
 
 
-                <footer className="end"> <p> END OF CONTENT </p> </footer>
+                <footer className="end">
+                    <p>@ 2017, To The New</p>
+                    <ul className="help-menu">
+                        <li> <a href="/about"> About </a> </li>
+                        <li> <a href="#"> Help </a> </li>
+                    </ul>
+                </footer>
             </div>
         );
     }

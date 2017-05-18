@@ -42,13 +42,13 @@ export default class Buzz extends Component{
             console.log(this.props.userImage,"image of person who commented")
             return(
             <div className="addComment">
-                <textarea placeholder="comment"
+                <input type="text" placeholder="comment"
                   className="comment"
                   maxLength="200"
                   onChange={this.writeComment.bind(this)}
                   value={this.state.comment}
-                ></textarea>
-                <button className="submitComment" width='60px'
+                ></input>
+                <button className="submitComment"
                         onClick={this.submitComment.bind(this,this.props.email,this.props.userImage,this.props.buzzID)}
                 >Submit</button>
             </div>

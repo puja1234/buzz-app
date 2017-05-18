@@ -1,6 +1,5 @@
 import React,{Component} from 'react'
 import get from 'lodash/get';
-import find from 'lodash/find'
 
 import like from '../../../assets/images/like.png'
 import dislike from '../../../assets/images/dislike.png'
@@ -10,9 +9,10 @@ import Comment from './Comment'
 
 export default class RecentBuzz extends Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state={
-            comment:''
+            comment:'',
+
         }
     }
     componentWillMount(){
@@ -64,15 +64,13 @@ export default class RecentBuzz extends Component{
         //
         //     });
         // }
-    }
+    };
 
 
     deletePost = (postId) => {
         this.props.ReduxProps.dispatch(asyncDeletePost(postId));
         this.props.ReduxProps.dispatch(asyncActionGetBuzz());
-    }
-
-
+    };
 
     render(){
         let index = 0;
@@ -88,12 +86,11 @@ export default class RecentBuzz extends Component{
 
                 <div className="recentBuzz">
                     <p className="caption">Recent Buzz</p>
-                    {recent_buzz.slice(0).reverse().map((items)=>(
+                    { recent_buzz.slice(0).reverse().map((items)=>(
                         <div key={index++} className="recent-buzz-body">
-                          <div className="posts">
+                            <div className="posts">
                                 <img className="user_imageurl" src={items.user_imageURL}/>
                                 <span className="user_email">{items.user_email}</span>
-
                                 <div className="category">{items.category}</div>
                               { email === items.user_email ?
                                   <div>
@@ -101,18 +98,38 @@ export default class RecentBuzz extends Component{
                                   </div> :
                                   <div></div>
                               }
-                              {items.imageUpload ?
+                              { items.imageUpload ?
                                   <img src={"http://localhost:3000/files/"+items.imageUpload} className="posted-image"/>:
                                   <div></div>
                               }
 
                                 <p>
-                                    {items.content}
+                                    { items.content }
                                 </p>
                                 <div className="recentBuzz-footer">
-                                    <span className="likecount">{items.likes.length}</span>
+                                    <div className="dropdown">
+                                        <button className="like-dislike-btn">{items.likes.length}</button>
+                                        <div className="dropdown-content">
+                                            {items.likes.length ?
+                                                items.likes.map((likeUsers) => (
+                                                    <a>{likeUsers}</a>
+                                                )):
+                                                <div></div>
+                                            }
+                                        </div>
+                                    </div>
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'like')}><img src={like}/></button>
-                                    <span className="dislikecount">{items.dislike.length}</span>
+                                    <div className="dropdown">
+                                        <button className="like-dislike-btn">{items.dislike.length}</button>
+                                        <div className="dropdown-content">
+                                            {items.dislike.length ?
+                                                items.dislike.map((likeUsers) => (
+                                                    <a>{likeUsers}</a>
+                                                )):
+                                                <div></div>
+                                            }
+                                        </div>
+                                    </div>
                                     <button className="like-dislike" onClick={this.likeDislike.bind(this,email,items._id,'dislike')}><img src={dislike}/></button>
                                     <div >
                                         {commentsState ?

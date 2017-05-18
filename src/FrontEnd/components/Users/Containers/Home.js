@@ -10,7 +10,8 @@ import Complaints from '../Components/Complaints'
 import Buzz from '../Components/Buzz'
 import RecentBuzz from '../Components/RecentBuzz'
 import {asyncActionFetchUserDetail} from '../../../actions'
-import About from '../Components/About'
+import Activity from '../Components/Activity'
+import LostAndFound from '../Components/LostAndFound'
 
 class Home extends Component{
 
@@ -18,7 +19,9 @@ class Home extends Component{
         super();
         this.state={
             showBuzz:true,
-            showPosts:false
+            showComplaints:false,
+            showActivities:false,
+            showLostAndFound:false
         }
     }
 
@@ -26,13 +29,36 @@ class Home extends Component{
         this.props.dispatch(asyncActionFetchUserDetail());
     }
     showComplaintComponent(){
-        this.setState({showBuzz:false})
+        this.setState({
+            showBuzz:false,
+            showComplaints:true,
+            showActivities:false,
+            showLostAndFound:false
+        })
     }
     showBuzzComponent(){
-        this.setState({showBuzz:true})
+        this.setState({
+            showBuzz:true,
+            showComplaints:false,
+            showActivities:false,
+            showLostAndFound:false
+        })
     }
-    showPostsComponent(){
-        this.setState({showPosts:true})
+    showActivity(){
+        this.setState({
+            showBuzz:false,
+            showComplaints:false,
+            showActivities:true,
+            showLostAndFound:false
+        })
+    }
+    showLostFound(){
+        this.setState({
+            showBuzz:false,
+            showComplaints:false,
+            showActivities:false,
+            showLostAndFound:true
+        })
     }
 
     render(){
@@ -64,8 +90,9 @@ class Home extends Component{
 
                     <ul className="main-menu">
                         <li> <a onClick={this.showBuzzComponent.bind(this)}> Home <span>&#10095;</span></a> </li>
-                        {/*<li> <a onClick={this.showComplaintComponent.bind(this)}> Complaints <span>&#10095;</span> </a> </li>
-                        <li> <a > Posts <span>&#10095;</span> </a> </li>*/}
+                        <li> <a onClick={this.showComplaintComponent.bind(this)}> Complaints <span>&#10095;</span> </a> </li>
+                        <li> <a onClick={this.showActivity.bind(this)}> Activity <span>&#10095;</span> </a> </li>
+                        <li> <a onClick={this.showLostFound.bind(this)}> Lost and Found <span>&#10095;</span> </a> </li>
                     </ul>
                 </div>
                 </div>
@@ -77,7 +104,27 @@ class Home extends Component{
                         <RecentBuzz ReduxProps={this.props}/>
                     </div>
                      :
-                    <Complaints />
+                    <div>
+                        <Complaints/>
+                        {/*{
+                            this.state.showComplaints ?
+                                <Complaints/> :
+                                <div>
+                                    {this.state.showActivities ?
+                                    <Activity ReduxProps={this.props}/> :
+                                        <div>
+                                            {this.state.showLostAndFound ?
+                                                <LostAndFound ReduxProps={this.props}/>:
+                                                <div>
+                                                    <Buzz ReduxProps={this.props}/>
+                                                    <RecentBuzz ReduxProps={this.props}/>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                        }*/}
+                    </div>
                 }
 
 

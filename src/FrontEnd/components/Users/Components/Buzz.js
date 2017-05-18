@@ -55,7 +55,8 @@ export default class Buzz extends Component{
                 err:'',
                 buzz: '',
                 image: '',
-                imagePreviewUrl:''
+                imagePreviewUrl:'',
+                err:'Scroll down to see your post'
             }, function () {
                 console.log(this.state.postData);
                 this.props.ReduxProps.dispatch(asyncActionPostBuzz(formData));
@@ -135,12 +136,16 @@ export default class Buzz extends Component{
                          <button className="submit-buzz" onClick={this.addBuzz.bind(this)}>Submit</button>
                      </div>
                  </div>
-                 <div className="imagePreview">
-                    <img src={this.state.imagePreviewUrl}/>
-                 </div>
+                 {this.state.imagePreviewUrl?
+                     <div className="imagePreview">
+                         <img className="imagePreview" src={this.state.imagePreviewUrl}/>
+                     </div>:
+                     <div></div>}
+
                  <div className="errorBuzz">
                  {this.state.err}
                  </div>
+
             </div>
         )
     }

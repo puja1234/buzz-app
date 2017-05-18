@@ -1,13 +1,18 @@
 body {
     box-sizing: border-box;
 }
+.mainContainer {
+    padding-left: 102px;
+    padding-right: 102px;
+    background-color: rgba(204, 204, 204, 0.25);
+}
 .headerContainer {
     position: relative;
     margin-bottom: 20px;
 }
 .headerContainer>img {
     width: 100%;
-    height: 300px;
+    height: 200px;;
 }
 
 .logoToTheNewContainer {
@@ -42,15 +47,17 @@ buzz-body {
     float: right;
 }
 .wrapper {
-    background:white;
-    width:100%;
+    background: rgba(255, 255, 255, 0.18);
+    width:95%;
 }
 
 .buzz-details {
     border-radius: 3px;
     background: transparent;
     display: block;
-    margin:0px auto;
+    width: 82%;
+    margin: 0px 74.1562px 0px 70.1406px;
+    height: 100px
 }
 
 .dropbtn {
@@ -183,6 +190,8 @@ p {
     width: 79%;
     border: 1px solid #979a97;
     border-width: 1px 1px 0px 1px;
+
+
 }
 
 .header img {
@@ -219,12 +228,15 @@ p {
 }
 
 .errorBuzz {
-    padding: 10px 0 0 408px;
+
+    padding: 10px 0 0 304px;
     font-size: x-large;
     color: red;
 }
 
 .imagePreview {
-    width: 324px;
-    padding-left: 301px;
+
+    width: 258px;
+    padding-left: 139px;
+
 }
